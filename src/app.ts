@@ -1,17 +1,11 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import config from 'config';
-import connect from './utils/connect';
-import logger from './utils/logger';
-import routes from './routes';
+import bodyParser from 'body-parser';
+import express, { Request, Response } from 'express';
 
-dotenv.config();
-
-const port = config.get<number>('port');
 const app = express();
+app.use(bodyParser.json());
 
-app.listen(port, async () => {
-  logger.info(`App 🚀 is running on port ${port}`);
-  routes(app);
-  await connect();
+app.get('/api/v1/test', (req: Request, res: Response) => {
+  res.json({ message: 'Test' });
 });
+
+export default app;
